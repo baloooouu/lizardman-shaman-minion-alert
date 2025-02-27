@@ -22,6 +22,7 @@ public class LizardmanShamanMinionAlertPlugin extends Plugin
 {
 	private static final Integer SPAWN_ID = 6768;
 	private static Boolean SPAWNS_EXIST_PREVIOUS_TICK = false;
+
 	@Inject
 	private Client client;
 
@@ -60,9 +61,9 @@ public class LizardmanShamanMinionAlertPlugin extends Plugin
 	}
 
 	private boolean spawnCurrentlyExists() {
-		NPC[] npcs = client.getCachedNPCs();
+		IndexedObjectSet<? extends NPC> npcs = client.getTopLevelWorldView().npcs();
 
-		return Arrays.stream(npcs).anyMatch(n -> validSpawn(n));
+		return npcs.stream().anyMatch(n -> validSpawn(n));
 	}
 
 	private boolean validSpawn(NPC npc) {
